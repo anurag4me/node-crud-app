@@ -36,8 +36,14 @@ router.post("/add", upload, async (req, res) => {
 });
 
 // Get all users route
-router.get("/", (req, res) => {
-  res.render("index", { title: "Home Page" });
+router.get("/", async (req, res) => {
+  const allUsers = await User.find({});
+  if (!allUsers) return res.json({ message: "Error" });
+  req.session.message = {
+    type: "success",
+    message: "User added successfully!",
+  };
+  res.render("index", { title: "Home Page", users: allUsers });
 });
 
 router.get("/add", (req, res) => {
