@@ -1,6 +1,7 @@
 // imports
 require("dotenv").config();
 const express = require("express");
+const path = require("path")
 const mongoose = require("mongoose");
 const session = require("express-session");
 
@@ -30,6 +31,10 @@ app.use((req, res, next) => {
   delete req.session.message;
   next();
 });
+
+// set template engine
+app.set('view engine', 'ejs');
+app.set('views', path.resolve('./views'))
 
 app.get("/", (req, res) => {
   res.send("Welcome to NodeJs CRUD application");
