@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path")
 const mongoose = require("mongoose");
 const session = require("express-session");
+const getRoute = require("./routes/router");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -36,9 +37,8 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
 app.set('views', path.resolve('./views'))
 
-app.get("/", (req, res) => {
-  res.send("Welcome to NodeJs CRUD application");
-});
+// route prefix
+app.use("", getRoute)
 
 app.listen(PORT, () =>
   console.log(`Server started at http://localhost:${PORT}`)
