@@ -13,6 +13,24 @@ mongoose
   .then(() => console.log("MongoDb connected!"))
   .catch((err) => console.log("Mongo Error", err));
 
+// middlewares
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.use(
+  session({
+    secret: "my secret key",
+    saveUninitialized: true,
+    resave: false,
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.message = req.session.message;
+  delete req.session.message;
+  next();
+});
+
 app.get("/", (req, res) => {
   res.send("Welcome to NodeJs CRUD application");
 });
