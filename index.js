@@ -1,7 +1,6 @@
 // imports
 require("dotenv").config();
 const express = require("express");
-const path = require("path")
 const mongoose = require("mongoose");
 const session = require("express-session");
 const getRoute = require("./routes/router");
@@ -35,7 +34,6 @@ app.use((req, res, next) => {
 
 // set template engine
 app.set('view engine', 'ejs');
-app.set('views', path.resolve('./views'))
 
 // route prefix
 app.use("", getRoute)
