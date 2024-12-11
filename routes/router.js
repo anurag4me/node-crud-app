@@ -86,4 +86,20 @@ router.post("/update/:userId", upload, async (req, res) => {
   res.redirect("/");
 });
 
+// Delete user route
+router.get("/delete/:userId", async (req, res) => {
+  const user = await User.findByIdAndDelete(req.params.userId);
+  if (!user) return res.json({ message: "User not found!" });
+  try {
+    fs.unlinkSync("./uploads/" + user.image);
+  } catch (err) {
+    console.log(err);
+  }
+  req.session.message = {
+    type: "info",
+    message: "User deleted successfully!",
+  };
+  res.redirect("/");
+});
+
 module.exports = router;
